@@ -1,0 +1,13 @@
+{
+    "python.pythonPath": "/Users/joost/.virtualenvs/aclima/bin/python",
+    "python.autoComplete.extraPaths": [
+        "./Users/joost/OneDrive - PennO365/Documents/Career/aclima projects/takehome/main.py"
+    ],
+    "[python]": {
+    
+        "gitlens.codeLens.symbolScopes": [
+            "!Module"
+        ],
+        "editor.wordBasedSuggestions": false
+    }
+}
