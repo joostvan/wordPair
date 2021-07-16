@@ -11,3 +11,7 @@ def login():
 @views.route('/sign-up')
 def signup():
     return render_template("signup.html")
+
+@views.route('/logout')
+def logout():
+    return render_template("logout.html")
