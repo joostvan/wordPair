@@ -1,95 +1,16 @@
-{% extends "base.html" %} {% block title %}Aclima Sign Up Page {% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Aclima Analyzer {% endblock %} {% block content %}
 
-<head>
-    <title>Upload Image</title>
-    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
-</head>
 
-<body>
-
-    {% if msg %}
-    <h1>{{ msg }}</h1>
-    {% endif %}
-
-    <h1>Upload new File</h1>
-
-    <form method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <input type="submit" value="Upload">
-    </form>
-
-    <h1>Result:</h1>
-    {% if img_src %}
-    <img src="{{ img_src }}"> {% endif %} {% if extracted_text %}
-    <p> The extracted text from the image above is: <b> {{ extracted_text }} </b></p>
-
-    {% else %} The extracted text will be displayed here {% endif %}
-</body>
 
 <h4 align='center'>Fill In</h4>
 <div id="container" align='center'>
-    <input type='text' id='member' name='member' placeholder='Enter your repeat text' value='{{ extracted_text }}'>
+    <input type='text' id='member' name='member' placeholder='Enter your repeat text' value=''>
     <br>
     <br>
     <button type="submit" class="btn btn-primary" href="#" id="filldetails" onclick="addFields()">Calculate me!</button>
     <p id="inputString"></p>
 </div>
 
-<h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
-    {% for note in user.notes %}
-    <li class="list-group-item">
-        <p1><b>input:</b></p1>
-        {{ note.input }}
-        <div class="container text-center" id="inputNote" value={{note.input}}> </div>
-        <p1><b>result:</b></p1>
-        {{ note.data }}
-        <button type="button" name="close " id="close" class="close" onClick="deleteNote({{note.id}})">
-                <span aria-hidden="true">&times;</span>
-        </button>
-        <!-- reuseNote({{note.id}}) -->
-        <button type="button" class="btn btn-outline-primary" id='btnID' value="{{note.input}}" onClick="reapply(value)">
-            <span aria-hidden="true">copy input</span>
-        </button>
-        <script>
-            function reapply(value) {
-                var dummy = document.createElement("textarea");
-                document.body.appendChild(dummy);
-                dummy.value = value;
-                dummy.select();
-                document.execCommand("copy");
-                document.body.removeChild(dummy);
-                fetch("/reuse-note", {
-                    method: "POST",
-                    body: JSON.stringify({}),
-                }).then((_res) => {
-                    window.location.href = "/";
-                });
-            }
-
-            function copy(id, notes) {
-                // for (note in user.notes) {
-                //     console.log(note)
-                // }
-                console.log(notes[id])
-            }
-
-
-            function a1_onclick(id) {
-                string = document.getElementById(id);
-                console.log(string)
-            }
-        </script>
-    </li>
-    {% endfor %}
-</ul>
-<form method="POST">
-    <input type="text" name="note" id="note" class="form-control" value='{{ extracted_text }}'>
-    <br />
-    <div align="center">
-        <button type="submit" id="addNote" class="btn btn-primary">Add Note</button>
-    </div>
-</form>
 <br>
 
 <script>
@@ -99,17 +20,6 @@
     }
     var count = 0;
     let inputs_array = [];
-
-    function recycleNote(noteId) {
-        console.log(noteId)
-        string = document.getElementsByClassName("list-group-item")[noteId].innerText
-        console.log(string)
-    }
-
-
-
-
-
 
     function addFields() {
         count++;
