@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note
+from .models import InputText
 from . import db
 import pytesseract
 from PIL import Image
@@ -46,7 +46,7 @@ def render_text_page():
          note = request.form.get('note')
          input_note = note
          if len(note) < 1:
-            flash('Note is too short!', category='error')
+            flash('Input Text is too short!', category='error')
          else:
             # set neighbor_count as dictionary
             neighbor_count = {}
@@ -70,7 +70,7 @@ def render_text_page():
             # caste to string
             neighbor_count = str(neighbor_count)
             # make note of it
-            new_note = Note(data=neighbor_count, input=input_note, user_id=current_user.id)
+            new_note = InputText(data=neighbor_count, input=input_note, user_id=current_user.id)
             db.session.add(new_note)
             db.session.commit()
             flash('Input added!', category='success')
@@ -105,7 +105,7 @@ def delete_note():
    '''
    note = json.loads(request.data)
    noteId = note['noteId']
-   note = Note.query.get(noteId)
+   note = InputText.query.get(noteId)
    if note:
       if note.user_id == current_user.id:
          db.session.delete(note)
