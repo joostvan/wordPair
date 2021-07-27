@@ -11,20 +11,24 @@
     <h1>{{ msg }}</h1>
     {% endif %}
 
-    <h1 align="center">Upload new File</h1>
-    <form method="post" enctype="multipart/form-data" align="center">
+    <h1>Upload new File</h1>
+
+    <form method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <input type="submit" value="Upload">
-
     </form>
-    <h1 align="center">Result:</h1>
+
+    <h1>Result:</h1>
     {% if img_src %}
     <img src="{{ img_src }}"> {% endif %} {% if extracted_text %}
-    <p align="center"> The extracted text from the image above is: <b> {{ extracted_text }} </b></p>
+    <p> The extracted text from the image above is: <b> {{ extracted_text }} </b></p>
+
     {% else %} The extracted text will be displayed here {% endif %}
 </body>
 
-<h1 align="center">Analyzed Text</h1>
+
+
+<h1 align="center">Text Inputs</h1>
 <ul class="list-group list-group-flush" id="notes">
     {% for note in user.notes %}
     <li class="list-group-item">
@@ -37,33 +41,35 @@
                 <span aria-hidden="true">&times;</span>
         </button>
         <!-- reuseNote({{note.id}}) -->
-        <button type="button" class="btn btn-outline-primary" id='btnID' value="{{note.input}}" onClick="reapply(value) ">
-            <span aria-hidden="true ">copy input</span>
+        <button type="button" class="btn btn-outline-primary" id='btnID' value="{{note.input}}" onClick="reapply(value)">
+            <span aria-hidden="true">copy input</span>
         </button>
         <script>
             function reapply(value) {
-                var dummy = document.createElement("textarea ");
+                // creates a dummy text area for the intended copied value and copies
+                // fetches the reuse function to flash copied message
+                var dummy = document.createElement("textarea");
                 document.body.appendChild(dummy);
                 dummy.value = value;
                 dummy.select();
-                document.execCommand("copy ");
+                document.execCommand("copy");
                 document.body.removeChild(dummy);
-                fetch("/reuse-note ", {
-                    method: "POST ",
+                fetch("/reuse-note", {
+                    method: "POST",
                     body: JSON.stringify({}),
                 }).then((_res) => {
-                    window.location.href = "/ ";
+                    window.location.href = "/";
                 });
             }
         </script>
     </li>
     {% endfor %}
 </ul>
-<form method="POST ">
-    <input type="text " name="note " id="note " class="form-control " value='{{ extracted_text }}'>
+<form method="POST">
+    <input type="text" name="note" id="note" class="form-control" value='{{ extracted_text }}'>
     <br />
-    <div align="center ">
-        <button type="submit " id="addNote " class="btn btn-primary " style=" border:#1C4870; background-color: #1C4870; ">Add Text</button>
+    <div align="center">
+        <button type="submit" id="addNote" class="btn btn-primary">Add Text</button>
     </div>
 </form>
 <br> {% endblock %}

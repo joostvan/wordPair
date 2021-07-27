@@ -1,16 +1,19 @@
-<!DOCTYPE html>
 <html>
 
+
 <head>
+    <!-- importing the metadata and stylesheets -->
     <meta charset="utf-8" />
     <meta name="viewpoint" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <!-- setting the block title -->
     <title>{% block title %}Home{% endblock %}</title>
 </head>
 
 <body>
+    <!-- I made the color to match Aclima's logo color :) -->
+    <!-- here I apply bootstraps navigation bar class -->
     <nav class="navbar navbar-expand-lg navbar-dark" style=" background-color: #1C4870; ">
         <button class="navbar-toggler " type="button " data-toggle="collapse " data-target="#navbar ">
             <span class="navbar-toggler-icon "></span>
@@ -18,6 +21,7 @@
 
         <div class="collapse navbar-collapse " id="navbar ">
             <div class="navbar-nav ">
+                <!-- check to see if the user is authenticated and allow access to the Logout and ML Reader pages, otherwise only allow access to the login and signup pages -->
                 {% if user.is_authenticated %}
                 <a class="nav-item nav-link " id="logout " href="/logout ">Logout</a>
                 <a class="nav-item nav-link " id="analyzer " href="/ ">ML Reader</a> {% else %}
@@ -26,6 +30,7 @@
             </div>
         </div>
     </nav>
+    <!-- from get_flash_messages, we flash the messages received, first showing the error messages  -->
     {% with messages = get_flashed_messages(with_categories=true) %} {% if messages %} {% for category, message in messages %} {% if category == 'error' %}
     <div class="alert alert-danger alter-dismissable fade show " role="alert ">
         {{ message }}
@@ -34,22 +39,25 @@
           </button>
     </div>
     {% else %}
+    <!-- now showing the success messages  -->
     <div class="alert alert-success alter-dismissable fade show " role="alert ">
         {{ message }}
         <button type="button " class="close " data-dismiss="alert ">
             <span aria-hidden="true ">&times;</span>
           </button>
     </div>
+    <!-- now showing the success messages  -->
     {% endif %} {% endfor %} {% endif %} {% endwith %}
     <div class="container ">
         {% block content %} {% endblock %}
     </div>
-    <center>
-        <a href="https://aclima.io/ ">
-            <img src="static/images/aclima.jpeg " alt="Aclima " height=120px>
-        </a>
-    </center>
-
+    <div>
+        <center>
+            <a href="https://aclima.io/ ">
+                <img src="static/images/aclima.jpeg " alt="Aclima" height="120px">
+            </a>
+        </center>
+    </div>
 
     <script type="text/javascript " src="{{ url_for( 'static', filename='form.js' ) }} "></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js " integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN " crossorigin="anonymous "></script>
